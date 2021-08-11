@@ -1,0 +1,92 @@
+『類別 class』
+大致上與js相同，但多了屬性宣告: var, public, private，方便屬性封裝。
+var & public 用法相同；public代表「公開該屬性」，大家都可以取用。
+private 私有的屬性，適用於不想讓外部使用的資訊。
+
+<? php
+    class Person {
+        var $name;
+        public $mobile;
+        private $sno = 'secret';
+    }   
+    $p = new Person;            //作法跟js相同，用new去建立個體
+    $p->name = "Lulu Lin";
+    $p->mobile = "0800091000";
+    //$p->sno = "123";          //私有的屬性，不可讀取＆設定
+    print＿r($p);
+    eacho $p->name;
+
+
+---------------------------
+『方法』
+定義的方式，與js類似，透過關鍵是function(不可省略)
+
+<?php
+    class Person {
+        private $name;
+        function setName($n) {
+            $this->name = $n;
+        }
+        function getName(){
+            return $this->name;
+        }
+    }
+    $p = new Person;
+    $p->setName("Victor");
+    eacho $p->getName();
+
+---------------------------
+『建構函式 construct ＆ 結構函式destruct』
+普遍使用建構函式
+
+<?php
+    class Person {
+        var $name;
+        function _construct($n){
+            $this->name = $n;
+            echo $this->name. '建立<br />';
+        }
+        function _destruct(){
+            echo $this->name. '解構<br />';
+        }
+    }
+    $p = new Person;
+    unset($p);    //unset刪除變數，如果變數指的是物件，會在刪除變數前，呼叫destruct
+    $q = new Person('q');
+
+
+---------------------------
+『類別方法』
+就是靜態的方法 static
+定義function時，內部都'沒'有用到個體的屬性/方法，呼叫時可以用「：：」，
+用類別MyMath的distance方法，當作靜態的方法，不需要建立物件的個體，直接使用把類別MyMath拿來用。
+php文件中，只要屬於類別的方法，都會使用「：：」，而非瘦箭頭「 -> 」，範例 https://www.php.net/manual/en/pdo.query.php
+
+
+<?php
+    class MyMath {
+        function distance ($x1, $y1, $x2, $y2){
+            $dx = $x1 - $x2;
+            $dy = $y1 - $y2;
+            return sqrt($dx * $dx + $dy * $dy);
+        }
+    }
+    eacho MyMath::distance(1, 1, 11, 11);
+
+---------------------------
+『Cookie』
+https://www.php.net/manual/en/function.setcookie
+存放在browser，可以讓特定cookie失效，但無法刪除
+以網域(來源origin)為單位
+大小受限，一般4K (早期browser header限制在4k，超過就丟掉)
+可以在用戶端設定關閉，但會導致無法在各網站登入
+有期限限制
+自動傳給主機(放到request header)
+JS也可以處理cookie，但可調整的範圍有限
+
+流程：
+1. browser -拜訪-> server(發request)
+2. server 為了辨別用戶/紀錄資料，在response header告訴browser，我要設定cookie
+3. browser收到後，將cookie設定在本地端(檔案/browser自己的資料庫)
+如果用戶端已設cookie，每次發request，都會把cookie放到request header (預設情況)
+例外：fetch ajax不會自動帶cookie
