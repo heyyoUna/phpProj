@@ -99,7 +99,15 @@ session 資料存在server端，可以存成檔案或資料庫。
 主要用在登入、購物車等。
 HTTP 是一個「無狀態協議 Stateless Protocol」，當跳方跳去其他網站，原網站無法知道他在離開該網站後的動作。
 第一次拜訪，server不知道他是誰，server會給初拜訪的用戶一個編號，即為session id(後端的session原則上都存在cookie)，透過id辨別用戶，當存活時間結束，存放該用戶資料的session結束。
-存活時間：一般在5-20分鐘，存活時間越短越能節省主機資源。
+存活時間lifeTime：一般在5-20分鐘，存活時間越短越能節省主機資源。`
 圖解 https://tinyurl.com/3sjsw7py 
+
+常用函式：
+1. session_start() -> 啟用session
+2. session_destroy() -> 把session裡面的所有資料清空
+3. unset($SESSION['num']) -> 同上(較常被使用)
+
+
+https有加密，http 沒有！https必須由第三方公認主機認證，才可使用。
 
 
