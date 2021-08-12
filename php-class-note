@@ -79,11 +79,12 @@ https://www.php.net/manual/en/function.setcookie
 存放在browser，可以讓特定cookie失效，但無法刪除
 以網域(來源origin)為單位
 大小受限，一般4K (早期browser header限制在4k，超過就丟掉)
-可以在用戶端設定關閉，但會導致無法在各網站登入
-有期限限制
-自動傳給主機(放到request header)
-JS也可以處理cookie，但可調整的範圍有限
+可以在用戶端設定關閉，但會導致無法在各網站登入。
+有期限限制。
+自動傳給主機(放到request header)。
+JS也可以處理cookie，但可調整的範圍有限。
 php不同檔案的全域變數，除非有include一般不會互相影響；但cookie設定、session、database，可以跨頁面。
+透過檢查工具，即可看到cookie資料，因此不建議放機密資料(如帳密)在cookie。
 
 流程：
 1. browser -拜訪-> server(發request)
@@ -91,3 +92,14 @@ php不同檔案的全域變數，除非有include一般不會互相影響；但c
 3. browser收到後，將cookie設定在本地端(檔案/browser自己的資料庫)
 如果用戶端已設cookie，每次發request，都會把cookie放到request header (預設情況)
 例外：fetch ajax不會自動帶cookie
+
+---------------------------
+『session』
+session 資料存在server端，可以存成檔案或資料庫。
+主要用在登入、購物車等。
+HTTP 是一個「無狀態協議 Stateless Protocol」，當跳方跳去其他網站，原網站無法知道他在離開該網站後的動作。
+第一次拜訪，server不知道他是誰，server會給初拜訪的用戶一個編號，即為session id(後端的session原則上都存在cookie)，透過id辨別用戶，當存活時間結束，存放該用戶資料的session結束。
+存活時間：一般在5-20分鐘，存活時間越短越能節省主機資源。
+圖解 https://tinyurl.com/3sjsw7py 
+
+
