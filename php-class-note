@@ -83,6 +83,7 @@ https://www.php.net/manual/en/function.setcookie
 有期限限制
 自動傳給主機(放到request header)
 JS也可以處理cookie，但可調整的範圍有限
+php不同檔案的全域變數，除非有include一般不會互相影響；但cookie設定、session、database，可以跨頁面。
 
 流程：
 1. browser -拜訪-> server(發request)
