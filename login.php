@@ -38,7 +38,6 @@
             </div>
 
 
-
         </div>
     </div>
 </div>
@@ -48,28 +47,37 @@
 
 <script>
     function sendForm(){
-        let isPass = true;
+        let isPass = true;  //設定會通過檢查 - true；先假設是true，但若有任一項檢查項目不合格，就會跳false
         document.form1.account.nextElementSibling.style.display = 'none';
         document.form1.password.nextElementSibling.style.display = 'none';
 
         if(! document.form1.account.value){     
             document.form1.account.nextElementSibling.style.display = 'block';   //回傳element 的下一個元素，可透過console檢查
-            isPass = false;
+            isPass = false;  //檢查項目1
         }
 
         if(! document.form1.password.value){     
             document.form1.password.nextElementSibling.style.display = 'block';  
-            isPass = false;
+            isPass = false; //檢查項目2；所有檢查項目，只要有一項不合格，就會跳為false 
         }
 
         if(isPass){
+            const fd = new FormData(document.form1);    //這邊的form1顯示name屬性的重要！
 
+            fetch('login-api.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r=>r.json()) 
+                .then(obj=>{
+                    console.log('result:', obj);
+                });
         }
-
-
-
     }
 </script>
 
 <?php include __DIR__. '/partials/html-foot.php'; ?>
+
+<!-- 更改完頁面要重新整理，不然會停留在舊的內容(舊的快取)；
+搜尋列旁的'preserve log'、'disable cache'要打勾，否則也會停留在舊內容的快取 -->
 
