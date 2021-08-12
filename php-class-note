@@ -99,7 +99,8 @@ session 資料存在server端，可以存成檔案或資料庫。
 主要用在登入、購物車等。
 HTTP 是一個「無狀態協議 Stateless Protocol」，當跳方跳去其他網站，原網站無法知道他在離開該網站後的動作。
 第一次拜訪，server不知道他是誰，server會給初拜訪的用戶一個編號，即為session id(後端的session原則上都存在cookie)，透過id辨別用戶，當存活時間結束，存放該用戶資料的session結束。
-存活時間lifeTime：一般在5-20分鐘，存活時間越短越能節省主機資源。`
+存活時間lifeTime：一般在5-20分鐘，存活時間越短越能節省主機資源。
+sesion id 具有辨別性，不會用流水號，不易猜測(讓其他用戶不易取得)。
 圖解 https://tinyurl.com/3sjsw7py 
 
 常用函式：
