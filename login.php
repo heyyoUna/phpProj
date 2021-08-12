@@ -71,6 +71,11 @@
             .then(r=>r.json()) 
                 .then(obj=>{
                     console.log('result:', obj);
+                    if(obj.success){
+                        location.href = 'index_.php'; //登入成功跳轉到其他頁面
+                    } else {
+                        alert(obj.error); //登入錯誤跳警示
+                    }
                 });
         }
     }
