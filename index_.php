@@ -1,4 +1,10 @@
-<?php $title = '胖胖區' ?>
+
+<?php 
+    include __DIR__. '/partials/init.php';
+    $title = '胖胖區' 
+?>
+
+
 
 <?php include __DIR__. '/partials/html-head.php'; ?>
 <?php include __DIR__. '/partials/navbar.php'; ?>
