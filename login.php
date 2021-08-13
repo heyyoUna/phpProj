@@ -1,7 +1,15 @@
 
 <?php 
     include __DIR__. '/partials/init.php';
-    $title = '登入' 
+    $title = '登入';
+
+    //php的跳轉是直接透過header(redirect)，直接跳轉到別的頁面
+    if(isset($_SESSION['user'])){
+        header('location:index_.php');
+        exit;  //如果沒下結束，後面還是會繼續執行；網頁都要跳走了，再跑後面的程式也沒有意義
+    }
+//在登入的情況下，進入login.php的檔案，會直接跳到index檔案(彷彿login.php檔案不曾發生過)，但在檢查可以發現帶著status 302 的login.php
+    
 ?>
 
 <?php include __DIR__. '/partials/html-head.php'; ?>
@@ -76,7 +84,7 @@
                 .then(obj=>{
                     console.log('result:', obj);
                     if(obj.success){
-                        location.href = 'index_.php'; //登入成功跳轉到其他頁面
+                        location.href = 'index_.php'; //登入成功跳轉到其他頁面(js的跳轉)
                     } else {
                         alert(obj.error); //登入錯誤跳警示
                     }
