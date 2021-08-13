@@ -16,10 +16,10 @@
           </li>
         </ul>
 
-
+      <!-- 更改有無登入後，右上角的顯示文字 -->
         <ul class="navbar-nav">
 
-          <!-- 如果user有設定，代表有登入 -->
+          <!-- (1) 如果user有設定，代表有登入 -->
           <?php if(isset($_SESSION['user'])): ?>
           <li class="nav-item">
             <a class="nav-link active"><?= $_SESSION['user']['nickname']  ?></a>
@@ -28,7 +28,7 @@
             <a class="nav-link" href="logout.php">登出</a>
           </li>
         
-           <!-- 沒有登入時，要顯示的按鈕們 -->
+           <!-- (2) 沒有登入時，要顯示的按鈕們 -->
           <?php else: ?>
               <li class="nav-item">
                 <a class="nav-link active"  href="login.php">登入</a>
@@ -37,6 +37,7 @@
                 <a class="nav-link" href="#">註冊</a>
               </li>
 
+           <!-- (3)  -->
           <?php endif; ?>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="login.php">登入</a>
