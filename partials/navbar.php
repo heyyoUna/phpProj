@@ -6,33 +6,51 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+        </ul>
+
+
+        <ul class="navbar-nav">
+
+          <!-- 如果user有設定，代表有登入 -->
+          <?php if(isset($_SESSION['user'])): ?>
+          <li class="nav-item">
+            <a class="nav-link active"><?= $_SESSION['user']['nickname']  ?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="logout.php">登出</a>
           </li>
+        
+           <!-- 沒有登入時，要顯示的按鈕們 -->
+          <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link active"  href="login.php">登入</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">註冊</a>
+              </li>
+
+          <?php endif; ?>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="login.php">登入</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">註冊</a>
+            </li>
+
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+ 
       </div>
     </div>
   </div>
   </nav>
+
+
+  <!-- 因為navbar.php有使用session，所以所有～～有串此檔案的其他檔案，都要加上session_start；透過串接寫入該變數的init.php，方便管理 -->
