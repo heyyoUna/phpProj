@@ -2,12 +2,12 @@
 
 
 $db_host = 'localhost'; //設定要連到的主機 
-$db_name = 'mfee19'; //設定要連到的資料庫
+$db_name = 'mfee19MySQL'; //設定要連到的資料庫(至phpMyadmin確認資料庫名稱)
 $db_user = 'root'; 
 $db_pass = '';
 
 // date source name 
-$dsn = "mysql:host={$db_host};dbname={$db_name};charset=udf8"; //引號內容，不要加任何空格
+$dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8"; //引號內容，不要加任何空格
 
 
 
@@ -22,4 +22,4 @@ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", //一開始連線後，要執�
 
 // 如果沒有要做錯處理，可以直接連線
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
- 
+
