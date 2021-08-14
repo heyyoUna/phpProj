@@ -112,3 +112,12 @@ sesion id 具有辨別性，不會用流水號，不易猜測(讓其他用戶不
 https有加密，http 沒有！https必須由第三方公認主機認證，才可使用。
 
 
+---------------------------
+『PDO API』 資料庫連線
+PDO通用型，可以連mySQL或其他資料庫
+mysqli 只能連mysql或ndb，其他不行
+
+PDO https://www.php.net/manual/en/class.pdo.php
+mysqli https://www.php.net/manual/en/class.mysqli
+
+
