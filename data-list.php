@@ -1,12 +1,34 @@
 
 <?php 
+include __DIR__. '/partials/init.php';
+$title = '資料列表' ;
+
 // 集中在此 php 區塊，要資料
 
-    include __DIR__. '/partials/init.php';
-    $title = '資料列表' ;
+//固定每頁最多幾筆
+$perPage = 3;
+
+//用戶決定看第幾頁，預設值為1
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+//總筆數
+//透過query會拿到只有一個欄位的一筆資料(Recordset)；用索引式陣列顯示第一欄(fetch_num)
+$totalRows = $pdo->query("SELECT count(1) FROM address_book_0814")->fetch(PDO::FETCH_NUM)[0];
+echo "$totalRows,";
+
+//確定總頁數，才可確定分頁按鈕 (總頁數 ＝ 總筆數 / 每頁顯示筆數)
+// ceil 正數時無條件進位
+$totalPage = ceil($totalRows/$perPage);
+echo "$totalPage "; exit;
+
+
+
+
     $rows = $pdo
-            ->query("SELECT * FROM address_book_0814 LIMIT 4")
-            ->fetchall();
+    ->query("SELECT * FROM address_book_0814 ORDER BY sid DESC LIMIT 4 ")
+    ->fetchall();
+            // 透過降冪的sid排序，ORDER BY sid DESC
+            // order & limit 順序不可變
 
 
 
