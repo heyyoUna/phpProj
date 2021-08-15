@@ -22,6 +22,10 @@ $totalRows = $pdo->query("SELECT count(1) FROM address_book_0814")->fetch(PDO::F
 $totalPage = ceil($totalRows/$perPage);
 // echo "$totalRows, $totalPage"; exit;
 
+//讓page的值在安全範圍內
+if($page<1){header('location: ?page=1');exit;}
+if($page>$totalPage){header('location: ?page='. $totalPage); exit;}
+
 
 
 // SELECT * FROM address_book_0814 ORDER BY sid DESC LIMIT 0, 5 
@@ -29,6 +33,7 @@ $totalPage = ceil($totalRows/$perPage);
 // %s 佔位置
 // 透過降冪的sid排序，ORDER BY sid DESC；因為是降冪，抓取資料將從最大值的sid當作第一筆
 // order & limit 順序不可變
+//如果總筆數是0，會使總頁數也是0，導致輸出錯誤
 $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s",
  ($page-1) * $perPage, $perPage );
 
