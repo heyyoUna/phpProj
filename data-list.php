@@ -14,21 +14,28 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 //總筆數
 //透過query會拿到只有一個欄位的一筆資料(Recordset)；用索引式陣列顯示第一欄(fetch_num)
 $totalRows = $pdo->query("SELECT count(1) FROM address_book_0814")->fetch(PDO::FETCH_NUM)[0];
-echo "$totalRows,";
+// echo "$totalRows,";
 
 //確定總頁數，才可確定分頁按鈕 (總頁數 ＝ 總筆數 / 每頁顯示筆數)
 // ceil 正數時無條件進位
 $totalPage = ceil($totalRows/$perPage);
-echo "$totalPage "; exit;
+// echo "$totalRows, $totalPage"; exit;
 
 
 
+// SELECT * FROM address_book_0814 ORDER BY sid DESC LIMIT 0, 5 
+// limit 0,5 ：從第1筆開始，最多取5筆
+// %s 佔位置
+// 透過降冪的sid排序，ORDER BY sid DESC；因為是降冪，抓取資料將從最大值的sid當作第一筆
+// order & limit 順序不可變
+$sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s",
+ ($page-1) * $perPage, $perPage );
 
-    $rows = $pdo
-    ->query("SELECT * FROM address_book_0814 ORDER BY sid DESC LIMIT 4 ")
-    ->fetchall();
-            // 透過降冪的sid排序，ORDER BY sid DESC
-            // order & limit 順序不可變
+
+
+    $rows = $pdo->query($sql)->fetchall();
+            // 在網址後面加 ?page=2 ，查看第二頁內容
+
 
 
 
