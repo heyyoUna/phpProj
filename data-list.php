@@ -52,7 +52,8 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                     <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
                     <!-- ?page 當連結由問號開頭，代表該url資源，是目前撰寫中的檔案 -->
                     <?php for($i=1; $i<=$totalPage; $i++): ?>
-                    <li class="page-item">
+                        <!-- 如果class直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
+                    <li class="page-item <?= $i===$page ? 'active' : '' ?>">
                         <a class="page-link" href="?page=<?= $i ?>">
                             <?= $i ?>
                         </a>
