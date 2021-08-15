@@ -7,7 +7,7 @@ $title = '資料列表' ;
 //步驟流程(1)固定每頁筆數 (2)用戶決定看第幾頁 (3)總筆數 (4)總頁數 (5)資料呈現
 
 //固定每頁最多幾筆
-$perPage = 3;
+$perPage = 1;
 
 //用戶決定看第幾頁，預設值為1
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -49,14 +49,21 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
         <div class="col">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-md-center">
-
-                    <!-- 如果class直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
+                    
                     <li class="page-item">
+                        <a class="page-link" href="?page=<?= 1 ?>">
+                        第一頁
+                        </a></li>
+
+                    <!-- 在li的class直接下disabled，就會使整個左箭頭失效；
+                    下三元陣列，設定頁數小於1，才失效-->
+                    <li class="page-item <?= $page<=1 ? 'disabled' : '' ?> ">
                         <a class="page-link" href="?page=<?= $page-1 ?>">
                             <i class="fas fa-arrow-circle-left"></i>
                         </a></li>
 
                     <!-- ?page 當連結由問號開頭，代表該url資源，是目前撰寫中的檔案 -->
+                    <!-- 如果aclass直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
                     <?php for($i=1; $i<=$totalPage; $i++): ?>
                     <li class="page-item <?= $i==$page ? 'active' : '' ?>">
                         <a class="page-link" href="?page=<?= $i ?>">
@@ -64,9 +71,14 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                         </a></li>
                     <?php endfor; ?>
 
-                    <li class="page-item">
+                    <li class="page-item <?= $page>=$totalPage ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page+1 ?>">
                             <i class="fas fa-arrow-circle-right"></i>
+                        </a></li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $totalPage ?>">
+                        最末頁
                         </a></li>
 
                 </ul>
