@@ -4,6 +4,7 @@ include __DIR__. '/partials/init.php';
 $title = '資料列表' ;
 
 // 集中在此 php 區塊，要資料
+//步驟流程(1)固定每頁筆數 (2)用戶決定看第幾頁 (3)總筆數 (4)總頁數 (5)資料呈現
 
 //固定每頁最多幾筆
 $perPage = 3;
@@ -32,7 +33,7 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
  ($page-1) * $perPage, $perPage );
 
     $rows = $pdo->query($sql)->fetchall();
-            // 在網址後面加 ?page=2 ，查看第二頁內容
+            // 在網址後面加 ?page=2 ，查看第二頁內容；頁面設為負值，就會語法錯誤；超過有效頁數，會顯示僅會顯示標題列(不會錯誤)
 
 ?>
 
@@ -44,6 +45,28 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
 <?php include __DIR__. '/partials/navbar.php'; ?>
 
 <div class="container">
+    <div class="row ">
+        <div class="col">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-md-center">
+                    <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+                    <!-- ?page 當連結由問號開頭，代表該url資源，是目前撰寫中的檔案 -->
+                    <?php for($i=1; $i<=$totalPage; $i++): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $i ?>">
+                            <?= $i ?>
+                        </a>
+                    </li>
+                    <?php endfor; ?>
+                    <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+
+
     <div class="row">
         <div class="col">
 
