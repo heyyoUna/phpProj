@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=
   , initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/f7e0275ee7.js" crossorigin="anonymous"></script>
   <title><?= isset($title) ? $title. '-' : ''?>食物專欄</title>
 </head>
 <body>
