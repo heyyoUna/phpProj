@@ -9,7 +9,7 @@
 
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="data-list.php">資料列表</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
