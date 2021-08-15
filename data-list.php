@@ -31,13 +31,8 @@ $totalPage = ceil($totalRows/$perPage);
 $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s",
  ($page-1) * $perPage, $perPage );
 
-
-
     $rows = $pdo->query($sql)->fetchall();
             // 在網址後面加 ?page=2 ，查看第二頁內容
-
-
-
 
 ?>
 
