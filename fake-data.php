@@ -23,8 +23,8 @@ $chrArray = preg_split('//u', $str, -1, PREG_SPLIT_NO_EMPTY);
 
 
 //for內部為要執行的內容
-//產生100筆假資料
-for($i=0; $i<100; $i++){
+//產生5筆假資料
+for($i=0; $i<5; $i++){
 
     shuffle($chrArray);
     // $ar = array_slice($chrArray, 0, 3);
