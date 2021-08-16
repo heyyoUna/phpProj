@@ -1,6 +1,20 @@
 <?php
 include __DIR__. '/partials/init.php';
-// 且init檔案，內含db_connect，這樣才會連到資料庫
+// init檔案，內含db_connect，這樣才會連到資料庫
+
+$output = [
+    'success' => false, //確認是否新增成功
+    'error' => '',  //錯誤訊息
+    'code' => 0,
+    'rowCount' => 0,
+    'postData' => $_POST,
+];
+
+
+
+
+
+// TODO: 資料格式檢查
 
 // 把post進來的資料，原原本本的回傳回去
 // echo json_encode($_POST);
@@ -43,12 +57,18 @@ $stmt->execute([
     $_POST['birthday'], $_POST['address'], 
 ]);
 
+$output['rowCount'] = $stmt->rowCount();    //新增的筆數
+echo json_encode($output);
 
+/*
 echo json_encode([
     //rowcount如果有新增，就會拿到新增的筆數；如果用select就是讀取的筆數
     'rowCount' => $stmt->RowCount(), 
     'postData' => $_POST, //確認傳送過來的資料樣子
 ]);
+*/
+
+
 
 
 
