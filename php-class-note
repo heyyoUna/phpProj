@@ -121,3 +121,9 @@ PDO https://www.php.net/manual/en/class.pdo.php
 mysqli https://www.php.net/manual/en/class.mysqli
 
 
+---------------------------
+『瘦箭頭』 
+相當於js的點語法，意思為 『的』
+什麼物件『點』屬性 -> 什麼物件『的』方法
+
+
