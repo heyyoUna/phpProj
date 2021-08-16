@@ -1,4 +1,3 @@
-
 <?php 
     include __DIR__. '/partials/init.php';
     $title = '新增資料' 
@@ -64,14 +63,23 @@
         //跟登入時的架構類似，直接發送ajex，向對象為data-insert-api.php，透過post方式{}
         fetch ('data-insert-api.php', {
             method: 'POST',
-            body: 'fd',
-        }).then(r=>r.text().then(txt=>{
+            body: fd
+        })
+        .then(r=>r.text())
+        .then(txt=>{
             console.log(txt);
-        }));
+        })
 
+        //當fetch 的方式改為json，api檔案沒有套用json模式，就會出錯，解決方式如下：
+        // catch 為fetch 的錯誤處理方式
+        // 去呼叫catch的方法，給一個call back function，就會把錯誤資訊丟到console.log內
+        // 雖然依然顯示無法辨識json，但js不會因此被中斷
+        // js引擎在執行過程，如果錯誤沒有被捕捉，就會一直往外層丟，丟到沒有人接時，就會跳錯誤訊息，並終止後面js的運作
+        .catch(error=>{
+            console.log('error:', error);
+        });
     }
+
+
 </script>
 <?php include __DIR__. '/partials/html-foot.php'; ?>
-
-<!-- 網頁切分方便修改＆維護，假設網頁中navbar相同，就只要改一份檔案
- -->
