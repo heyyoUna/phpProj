@@ -2,6 +2,8 @@
 include __DIR__. '/partials/init.php';
 // init檔案，內含db_connect，這樣才會連到資料庫
 
+header('content-type: application/json');
+
 $output = [
     'success' => false, //確認是否新增成功
     'error' => '',  //錯誤訊息

@@ -61,7 +61,7 @@
         //整個表單，建立一個formdata，把整個表單放入
         const fd = new FormData(document.form1);
         //跟登入時的架構類似，直接發送ajex，向對象為data-insert-api.php，透過post方式{}
-        fetch ('data-insert-api.php', {
+        fetch ('data-insert-api_teacher_forTest.php', {
             method: 'POST',
             body: fd
         })

@@ -1,0 +1,31 @@
+XSS
+xss（Cross-site scripting）問題
+在前端視窗 address欄位，輸入<script>alert('爛芭樂')</script>；
+完成後，'爛芭樂'的警示訊息將揮之不去；
+重新整理data-list.php頁面，又會再度出現 (有設定data-insert.php新增資料成功，會跳到列表頁)；
+why??
+--> script標籤，除了頁面最前面外，不管在哪都可以執行
+
+-------------
+postman
+原身是chrome的外掛；用來測試後端api的工具
+
+<---實作I---->
+在login.php登入的狀態下，進入session.php，可以看到登入者資料；將session.php網址整串貼到postman，卻又不會show出用戶資料
+why??
+ -->在瀏覽器 & postman的用戶id 不同
+ 
+ 除了get，postman可以將設定改為其他php的方法 (前面5個較常用)：
+    (1)get:拿資料 (2)post:新增資料 (3)put:整筆修改 (4)path:修改某一二欄位 (5)delete:刪除 
+
+
+在login.php登入的狀態下，進入session.php，複製cookie，傳到postman，可以得到該已登入的使用者資料；若沒改session.php檔頭的content-type，該資料將不會以樹狀結構呈現
+
+<---實作II--->
+選post >> 套入data-insert-api.php網址 >> 選body >> urlencoded (form-data也可) >> key(欄位名稱)依序填入name, email, mobile, birthday, address >> value(欄位的值) 依序填入對應的值後，可傳送到後台資料庫
+
+
+form-data可上傳檔案 / urlencoded無法上傳檔案
+raw
+binary
+GraphQL

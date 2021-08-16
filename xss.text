@@ -1,6 +1,0 @@
-xss（Cross-site scripting）問題
-在前端視窗 address欄位，輸入<script>alert('爛芭樂')</script>；
-完成後，'爛芭樂'的警示訊息將揮之不去；
-重新整理data-list.php頁面，又會再度出現 (有設定data-insert.php新增資料成功，會跳到列表頁)；
-why??
---> script標籤，除了頁面最前面外，不管在哪都可以執行
