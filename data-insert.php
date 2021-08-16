@@ -19,27 +19,27 @@
                     <form name="form1">
                         <div class="form-group">
                             <label for="name">姓名 *</label>
-                            <input type="text" class="form-control" id="name" >
+                            <input type="text" class="form-control" id="name" name="name">
                             <small class="form-text "></small>
                         </div>
                         <div class="form-group">
                             <label for="Email">Email</label>
-                            <input type="text" class="form-control" id="email" >
+                            <input type="text" class="form-control" id="email" name="email" >
                             <small class="form-text "></small>
                         </div>
                         <div class="form-group">
                             <label for="mobile">手機</label>
-                            <input type="text" class="form-control" id="mobile" >
+                            <input type="text" class="form-control" id="mobile" name="mobile">
                             <small class="form-text "></small>
                         </div>
                         <div class="form-group">
                             <label for="birthday">生日</label>
-                            <input type="text" class="form-control" id="birthday" >
+                            <input type="text" class="form-control" id="birthday" name="birthday">
                             <small class="form-text "></small>
                         </div>
                         <div class="form-group">
                             <label for="address">地址</label>
-                            <input type="text" class="form-control" id="address" >
+                            <input type="text" class="form-control" id="address" name="address" >
                             <small class="form-text "></small>
                         </div>
 
