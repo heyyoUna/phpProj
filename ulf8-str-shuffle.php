@@ -14,9 +14,12 @@ shuffle($chrArray);
 
 //offset:0, length:3；取前面三個元素
 $ar = array_slice($chrArray, 0, 3);
-
 // implode() 函數把數組元素組合為一個字符串；重新整理可以得到新的假名
 echo implode('', $ar);
 
+
+
+
+// 其他亂數產生器: uniqid()、rand()
 
 
