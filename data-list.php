@@ -49,6 +49,16 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
 
 <?php include __DIR__. '/partials/navbar.php'; ?>
 
+    <style>
+        table tbody i.fas.fa-trash-alt {
+            color: darkred;
+        }
+        table tbody i.fas.fa-trash-alt.ajaxDelete {
+            color: darkorange;
+            cursor: pointer;
+        }
+    </style>
+
 <div class="container">
     <div class="row ">
         <div class="col">
@@ -102,6 +112,8 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th scope="col"><i class="fas fa-trash-alt"></i></th>
+
                         <!-- SELECT `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` FROM `address_book_0814` WHERE 1 -->
                         <th scope="col">sid</th>
                         <th scope="col">name</th>
@@ -109,13 +121,19 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                         <th scope="col">mobile</th>
                         <th scope="col">birthday</th>
                         <th scope="col">address</th>
+                        <th scope="col"><i class="fas fa-edit"></i></th>
+
                     </tr>
                  </thead>
-
                 <tbody>
                 <!-- 一筆就是一個tr，用迴圈把tbody內的tr包起來; -->
                 <?php foreach($rows as $r):?>  
                     <tr>
+                        <td>
+                            <a href="data-delete.php?side=<?= $r['sid'] ?>">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
                         <td><?= $r['sid'] ?></td>
                         <td><?= $r['name'] ?></td>
                         <td><?= $r['email'] ?></td>
@@ -127,6 +145,13 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
 
                         <!-- 推薦使用！！htmlentities 將內部字串做特殊符號跳脫，主要針對大於小於符號；會顯示完整標籤；原則上每個填入text的欄位，都要加 -->
                         <td><?= htmlentities($r['address']) ?></td>
+
+                        <td>
+                            <a href="data-edit.php?side=<?= $r['sid'] ?>">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
