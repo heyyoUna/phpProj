@@ -111,7 +111,7 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                  </thead>
 
                 <tbody>
-                <!-- 一筆就是一個tr，用迴圈把tbody內的tr包起來 -->
+                <!-- 一筆就是一個tr，用迴圈把tbody內的tr包起來; -->
                 <?php foreach($rows as $r):?>  
                     <tr>
                         <td><?= $r['sid'] ?></td>
@@ -119,7 +119,12 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                         <td><?= $r['email'] ?></td>
                         <td><?= $r['mobile'] ?></td>
                         <td><?= $r['birthday'] ?></td>
-                        <td><?= $r['address'] ?></td>
+
+                        <!-- 透過strip_tag可以取消內部的所有標籤功能，避免xss攻擊；script標籤會消失 
+                        <td><?= strip_tags($r['address']) ?></td>  -->
+
+                        <!-- 推薦使用！！htmlentities 將內部字串做特殊符號跳脫，主要針對大於小於符號；會顯示完整標籤；原則上每個填入text的欄位，都要加 -->
+                        <td><?= htmlentities($r['address']) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
