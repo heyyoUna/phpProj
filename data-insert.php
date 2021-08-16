@@ -109,7 +109,13 @@
         })
             .then(r=>r.json())
             .then(obj=>{
-            console.log(obj);
+                console.log(obj);
+                if(obj.success){
+                    location.href = 'data-list.php'; //新增成功，跳到列表頁；如果要新增的資料較多，可改為不跳轉，出現「新增成功」的警示即可
+                } else {
+                    alert(obj.error); //新增失敗，出現警示
+                }
+
         })
             .catch(error=>{
                 console.log('error:', error);
