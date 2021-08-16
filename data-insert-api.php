@@ -15,6 +15,16 @@ $output = [
 
 
 // TODO: 資料格式檢查
+/*
+filter_var: 使用特定的篩選器，篩選變數；
+亦可使用 Regular Express 篩選
+
+//若前面的email為email格式，filter_var就會回傳值；若否，則回傳false
+var_dump(filter_var('bob@example.com', FILTER_VALIDATE_EMAIL)); 
+
+var_dump(filter_var('http://example.com', FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)); 
+
+*/
 
 // 把post進來的資料，原原本本的回傳回去
 // echo json_encode($_POST);
