@@ -9,6 +9,3 @@
   <title><?= isset($title) ? $title. '-' : ''?>食物專欄</title>
 </head>
 <body>
-
-
-<!-- DOCTYPE 宣告檔案類型，跟不能在前面加註解(跟?php一樣) -->
