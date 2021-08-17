@@ -80,6 +80,7 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                     <!-- ?page 當連結由問號開頭，代表該url資源，是目前撰寫中的檔案 -->
                     <!-- 如果aclass直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
                     <!-- 透過$i=$page-5; $i<=$Page+5 讓頁碼最多一次出現11個 -->
+                    <!-- 把頁碼顯示錯寫成無限迴圈，資料庫直接掛掉(i=$page-5; $i=$Page+5) -->
                     <?php for($i=$page-5; $i < $page+5; $i++):
                         if($i>=1 and $i<=$totalPage): ?>
                     <li class="page-item <?= $i==$page ? 'active' : '' ?>">
