@@ -28,20 +28,17 @@ for($i=0; $i<5; $i++){
 
     shuffle($chrArray);
     // $ar = array_slice($chrArray, 0, 3);
-    $name = implode('', array_slice($chrArray, 0, 3)); //跟$ar定義列合併
+    $name = implode('', array_slice($chrArray, 0, 3) ); //跟$ar定義列合併
     
     $stmt->execute([
-        $name, 
-        uniqid(). '@test.com', 
-        '09'.strval(rand(10000000, 99999999)),  //strval轉換為字串；rand(範圍區間)
-        date('Ｙ-m-d', rand(strtotime('1990-01-01'), strtotime('2000-12-31'))), //在此區間內的隨機日期
-        '台北市', 
+        $name,
+        uniqid(). '@test.com',
+        '09'. strval(rand(10000000, 99999999)), //strval轉換為字串；rand(範圍區間)
+        date('Y-m-d', rand(strtotime('1990-01-01'), strtotime('2000-12-31'))), //在此區間內的隨機日期
+        '台北市',
     ]);
 
-
 }
-
-
 
 echo 'ok';
 
