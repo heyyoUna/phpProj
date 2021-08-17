@@ -7,7 +7,7 @@ $title = '資料列表' ;
 //步驟流程(1)固定每頁筆數 (2)用戶決定看第幾頁 (3)總筆數 (4)總頁數 (5)資料呈現
 
 //固定每頁最多幾筆
-$perPage = 1;
+$perPage = 5;
 
 //用戶決定看第幾頁，預設值為1
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -79,8 +79,8 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
 
                     <!-- ?page 當連結由問號開頭，代表該url資源，是目前撰寫中的檔案 -->
                     <!-- 如果aclass直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
-                    <!-- 透過$i=$page-5; $i<=$totalPage+5 讓頁碼最多一次出現11個 -->
-                    <?php for($i=$page-5; $i<=$totalPage+5; $i++):
+                    <!-- 透過$i=$page-5; $i<=$Page+5 讓頁碼最多一次出現11個 -->
+                    <?php for($i=$page-5; $i < $page+5; $i++):
                         if($i>=1 and $i<=$totalPage): ?>
                     <li class="page-item <?= $i==$page ? 'active' : '' ?>">
                         <a class="page-link" href="?page=<?= $i ?>">
