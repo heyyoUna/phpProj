@@ -24,7 +24,7 @@
                     <!-- onsubmit：在表單送出前觸發；
                     return false:取消預設的行為;
                      在name後面加require表示該欄位為必填-->
-                    <form name="form1">
+                    <form name="form1" onsubmit="checkForm(); return false;">
                         <div class="form-group">
                             <label for="name">姓名 *</label>
                             <input type="text" class="form-control" id="name" name="name" require>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="form-group">
                             <label for="birthday">生日</label>
-                            <input type="text" class="form-control" id="birthday" name="birthday">
+                            <input type="date" class="form-control" id="birthday" name="birthday">
                             <small class="form-text"></small>
                         </div>
                         <div class="form-group">
@@ -95,7 +95,7 @@
             name.style.border = '1px red solid';
         }
         //email.value，前者為欄位，後者為值
-        if (email_re.test(email.value)){
+        if (! email_re.test(email.value)){
             isPass = false;
             email.nextElementSibling.innerHTML = '請填寫完整email';
             email.style.border = '1px red solid';
@@ -107,14 +107,14 @@
                 method: 'POST',
                 body: fd
         })
-            .then(r=>r.json())
-            .then(obj=>{
-                console.log(obj);
-                if(obj.success){
-                    location.href = 'data-list.php'; //新增成功，跳到列表頁；如果要新增的資料較多，可改為不跳轉，出現「新增成功」的警示即可
-                } else {
-                    alert(obj.error); //新增失敗，出現警示
-                }
+            .then(r=>r.text())
+            .then(txt=>{
+                console.log(txt);
+                // if(obj.success){
+                //     // location.href = 'data-list.php'; //新增成功，跳到列表頁；如果要新增的資料較多，可改為不跳轉，出現「新增成功」的警示即可
+                // } else {
+                //     alert(obj.error); //新增失敗，出現警示
+                // }
 
         })
             .catch(error=>{
