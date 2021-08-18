@@ -131,7 +131,9 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                 <?php foreach($rows as $r):?>  
                     <tr>
                         <td>
-                            <a href="data-delete.php?side=<?= $r['sid'] ?>">
+                            <!-- onclick屬性雙引號，內層單引號 -->
+                            <a href="data-delete.php?side=<?= $r['sid'] ?>" onclick="return confirm('確認刪除編號 <?= $r['sid'] ?> 的資料')"
+                            >
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
