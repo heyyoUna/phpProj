@@ -6,7 +6,6 @@
     $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
     $sql = "SELECT * FROM `address_book_0814` WHERE sid=$sid";
-    //    echo $sql; exit;
 
     $r = $pdo->query($sql)->fetch();
 
@@ -16,17 +15,13 @@
     }
     // echo json_encode($r, JSON_UNESCAPED_UNICODE);
 ?>
-    
-
 <?php include __DIR__. '/partials/html-head.php'; ?>
 <?php include __DIR__. '/partials/navbar.php'; ?>
-
 <style>
     form .form-group small {
         color: red;
     }
 </style>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -35,11 +30,11 @@
                     <h5 class="card-title">修改資料</h5>
 
                     <form name="form1" onsubmit="checkForm(); return false;">
-                        <input type="hidden" name="sid" value="<?= $r['sid'] ?>">  <!--將提交資料的sid傳到api檔案-->
+                        <input type="hidden" name="sid" value="<?= $r['sid'] ?>">   <!--將提交資料的sid傳到api檔案-->
                         <div class="form-group">
                             <label for="name">姓名 *</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="<?= htmlentities($r['name']) ?>">  <!-- 加上value後，才會先呈現原始資料；透過htmlentities跳脫引號bug -->   
+                                value="<?= htmlentities($r['name']) ?>">    <!-- 加上value後，才會先呈現原始資料；透過htmlentities跳脫引號bug -->
                             <small class="form-text "></small>
                         </div>
                         <div class="form-group">
@@ -63,8 +58,7 @@
                         <div class="form-group">
                             <label for="address">address</label>
                             <textarea class="form-control" id="address" name="address" cols="30" rows="3"
-                                ><?= htmlentities($r['address']) ?></textarea > <!-- textArea不可以斷行，預設可以讓用戶調整文字框大小 -->
-                                
+                                ><?= htmlentities($r['address']) ?></textarea>  <!-- textArea不可以斷行，預設可以讓用戶調整文字框大小 -->
                             <small class="form-text "></small>
                         </div>
 

@@ -1,19 +1,14 @@
-<?php 
+<?php
     include __DIR__. '/partials/init.php';
-    $title = '新增資料' 
+    $title = '新增資料';
 ?>
-
-
-
 <?php include __DIR__. '/partials/html-head.php'; ?>
 <?php include __DIR__. '/partials/navbar.php'; ?>
-<style>
-    form .form-group small{
-        color: red;
-
-    }
-</style>
-
+    <style>
+        form .form-group small {
+            color: red;
+        }
+    </style>
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -21,44 +16,48 @@
                 <div class="card-body">
                     <h5 class="card-title">新增資料</h5>
 
+
                     <!-- onsubmit：在表單送出前觸發；
                     return false:取消預設的行為;
                      在name後面加require表示該欄位為必填-->
                     <form name="form1" onsubmit="checkForm(); return false;">
                         <div class="form-group">
                             <label for="name">姓名 *</label>
-                            <input type="text" class="form-control" id="name" name="name" require>
-                            <small class="form-text"></small>
+                            <input type="text" class="form-control" id="name" name="name">
+                            <small class="form-text "></small>
                         </div>
                         <div class="form-group">
-                            <label for="Email">Email *</label>
-                            <input type="email" class="form-control" id="email" name="email" require>
-                            <small class="form-text"></small>
+                            <label for="email">email *</label>
+                            <input type="text" class="form-control" id="email" name="email">
+                            <small class="form-text "></small>
                         </div>
                         <div class="form-group">
-                            <label for="mobile">手機</label>
+                            <label for="mobile">mobile</label>
                             <input type="text" class="form-control" id="mobile" name="mobile">
-                            <small class="form-text"></small>
+                            <small class="form-text "></small>
                         </div>
                         <div class="form-group">
-                            <label for="birthday">生日</label>
+                            <label for="birthday">birthday</label>
                             <input type="date" class="form-control" id="birthday" name="birthday">
-                            <small class="form-text"></small>
+                            <small class="form-text "></small>
                         </div>
                         <div class="form-group">
-                            <label for="address">地址</label>
-                            <input type="text" class="form-control" id="address" name="address" >
-                            <small class="form-text"></small>
+                            <label for="address">address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                            <small class="form-text "></small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+
+</div>
 <?php include __DIR__. '/partials/scripts.php'; ?>
 <script>
     //針對必填欄位做檢查
@@ -67,20 +66,15 @@
 
     const name = document.querySelector('#name');
     const email = document.querySelector('#email');
-
-
-
-
+    
     // mobile.style.border = '1px red solid';
 
-
     function checkForm(){
-        // 欄位的外觀會回復原來狀態
+        // 欄位的外觀要回復原來的狀態
         name.nextElementSibling.innerHTML = '';
-        name.style.border = '1px #cccccc solid';
+        name.style.border = '1px #CCCCCC solid';
         email.nextElementSibling.innerHTML = '';
-        email.style.border = '1px #cccccc solid';
-
+        email.style.border = '1px #CCCCCC solid';
 
         // 讓表單送出前，完成資料欄位檢查
         // 如果格式不符，要有欄位提示的不同外觀
@@ -89,42 +83,39 @@
         但如果姓名的長度，小於2，就會轉成false，並改變外觀(紅框＋警示)；
         剛好small(警示列)是下一個欄位，可使用nextElementSibling 去更改其內容；*/
         let isPass = true;
-        if (name.value.length < 2){
+        if(name.value.length < 2){
             isPass = false;
-            name.nextElementSibling.innerHTML = '請填寫正確姓名';
+            name.nextElementSibling.innerHTML = '請填寫正確的姓名';
             name.style.border = '1px red solid';
         }
+
         //email.value，前者為欄位，後者為值
-        if (! email_re.test(email.value)){
+        if(! email_re.test(email.value)){
             isPass = false;
-            email.nextElementSibling.innerHTML = '請填寫完整email';
+            email.nextElementSibling.innerHTML = '請填寫正確的 Email 格式';
             email.style.border = '1px red solid';
         }
 
-        if (isPass){
-            const fd = new FormData(document.form1);  
+        if(isPass){
+            const fd = new FormData(document.form1);
             fetch('data-insert-api.php', {
                 method: 'POST',
                 body: fd
-        })
-            .then(r=>r.text())
-            .then(txt=>{
-                console.log(txt);
-                // if(obj.success){
-                //     // location.href = 'data-list.php'; //新增成功，跳到列表頁；如果要新增的資料較多，可改為不跳轉，出現「新增成功」的警示即可
-                // } else {
-                //     alert(obj.error); //新增失敗，出現警示
-                // }
-
-        })
-            .catch(error=>{
-                console.log('error:', error);
-        });
-
+            })
+                .then(r=>r.json())
+                .then(obj=>{
+                    console.log(obj);
+                    if(obj.success){
+                        location.href = 'data-list.php';    //新增成功，跳到列表頁；如果要新增的資料較多，可改為不跳轉，出現「新增成功」的警示即可
+                    } else {
+                        alert(obj.error);   //新增失敗，出現警示
+                    }
+                })
+                .catch(error=>{
+                    console.log('error:', error);
+                });
         }
     }
-
-
 
         /*
         //整個表單，建立一個formdata，把整個表單放入
@@ -149,8 +140,6 @@
             console.log('error:', error);
         });
         */
-
-        
 
 </script>
 <?php include __DIR__. '/partials/html-foot.php'; ?>
