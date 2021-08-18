@@ -184,10 +184,26 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
     //一次處理所有table資料
     const myTable = document.querySelector('table'); 
     myTable.addEventListener('click', function(event){
-        console.log(event.target);
+
         //判斷是否點到橘色垃圾桶
         if(event.target.classList.contains('ajaxDelete')){
-            console.log(event.target.closest('tr')); //往上找，找到最接近tr的標籤
+            // console.log(event.target.closest('tr')); //往上找，找到最接近tr的標籤
+            const tr = event.target.closest('tr');
+            const sid = tr.getAttribute('data-sid'); //透過getAttribute拿到屬性
+            console.log(sid);
+
+            if(confirm(`是否要刪除編號${sid}的資料`)){  //刪除前確認
+                fetch('data-delete-api.php?sid=' +sid)
+                .then(r=>r.json())
+                .then(obj=>{
+                    if(obj.success){
+                        tr.remove();    //從DOM內移除元素
+                        // location.reload(); //資料刪除後，頁面資料會破壞每頁筆數要求，刷新頁面調整
+                    } else{
+                        alert(obj.error);
+                    }
+                });
+            } 
         }
     });
 </script>
