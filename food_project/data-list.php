@@ -133,4 +133,5 @@ $sql = sprintf("SELECT * FROM `Column` LIMIT %s, %s",
         </div>
     </div>
 
+
 <?php include __DIR__. '/food_partials/04html-end.php'; ?>
