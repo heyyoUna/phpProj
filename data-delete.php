@@ -13,4 +13,12 @@ if(! empty($sid)){
     $stmt = $pdo->query($sql);
 }
 
-header('Location: data-list.php'); //網頁刪除完，直接跳回data-list頁面
+// $_SERVER['HTTP_REFERER'] 從哪個頁面連過來的
+// 不一定有資料
+// 看起來好像頁面沒變，但其實已經從delete頁面，再回來list頁面
+if(isset($_SERVER['HTTP_REFERER'])){        
+    header("location:". $_SERVER['HTTP_REFERER']); 
+    //確認server有沒有送HTTP_REFERER這個檔頭過來
+} else { 
+    header('Location: data-list.php'); //若無，回到data-list頁面 
+}
