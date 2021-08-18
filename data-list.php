@@ -114,6 +114,7 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                 <thead>
                     <tr>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                        <th scope="col"><i class="fas fa-trash-alt"></i>ajax</th>
 
                         <!-- SELECT `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` FROM `address_book_0814` WHERE 1 -->
                         <th scope="col">sid</th>
@@ -129,13 +130,18 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
                 <tbody>
                 <!-- 一筆就是一個tr，用迴圈把tbody內的tr包起來; -->
                 <?php foreach($rows as $r):?>  
-                    <tr>
+                    <tr data-sid="<?= $r['sid'] ?>">  <!-- 開發人員自己定義的屬性，前面就會加data-，方便辨識也不會影響其他屬性 -->
                         <td>
                             <!-- onclick屬性雙引號，內層單引號 -->
                             <a href="data-delete.php?side=<?= $r['sid'] ?>" onclick="return confirm('確認刪除編號 <?= $r['sid'] ?> 的資料')"
                             >
                                 <i class="fas fa-trash-alt"></i>
                             </a>
+                        </td>
+                        <td>
+                            
+                                <i class="fas fa-trash-alt ajaxDelete"></i>  <!-- 用來標示功能 -->
+                                
                         </td>
                         <td><?= $r['sid'] ?></td>
                         <td><?= $r['name'] ?></td>
@@ -174,6 +180,17 @@ $sql = sprintf("SELECT * FROM `address_book_0814` ORDER BY sid DESC LIMIT %s, %s
 </div>
 
 <?php include __DIR__. '/partials/scripts.php'; ?>
+<script>
+    //一次處理所有table資料
+    const myTable = document.querySelector('table'); 
+    myTable.addEventListener('click', function(event){
+        console.log(event.target);
+        //判斷是否點到橘色垃圾桶
+        if(event.target.classList.contains('ajaxDelete')){
+            console.log(event.target.closest('tr')); //往上找，找到最接近tr的標籤
+        }
+    });
+</script>
 <?php include __DIR__. '/partials/html-foot.php'; ?>
 
 

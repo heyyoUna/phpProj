@@ -12,7 +12,7 @@ if(! empty($sid)){ //如果是空值，就直接跳到結尾echo；不是空值�
     $sql = "DELETE FROM `address_book_0814` WHERE sid=$sid";
     $stmt = $pdo->query($sql);
 
-    if($stmt->rowCount() ==1){  //如成功刪除一筆
+    if($stmt->rowCount() ==1){  //如成功刪除一筆，要進行的程式
         $output['success'] = true;
         $output['error'] = '';
     } else {    //有sid，但不是對應的sid
