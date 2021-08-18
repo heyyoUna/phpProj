@@ -56,8 +56,8 @@ $sql = sprintf("SELECT * FROM `Column` LIMIT %s, %s",
                     <!-- 如果aclass直接下active，選擇任一分頁後，全部分頁選項都會反白；下三元陣列，設定只有選定的頁面會反白 -->
                     <!-- 透過$i=$page-5; $i<=$Page+5 讓頁碼最多一次出現11個 -->
                     <!-- 把頁碼顯示錯寫成無限迴圈，資料庫直接掛掉(i=$page-5; $i=$Page+5) -->
-                    <?php for($i=$page-5; $i < $page+5; $i++):
-                        if($i>=1 and $i<=$totalPage): ?>
+                    <!-- <?php for($i=$page-5; $i < $page+5; $i++):
+                        if($i>=1 and $i<=$totalPage): ?> -->
                     <li class="page-item <?= $i==$page ? 'active' : '' ?>">
                         <a class="page-link" href="?page=<?= $i ?>">
                             <?= $i ?>
@@ -87,8 +87,6 @@ $sql = sprintf("SELECT * FROM `Column` LIMIT %s, %s",
                 <thead>
                     <tr>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
-
-                        <!-- SELECT `sid`, `article_cate_sid`, `article_id`, `article_title`, `article_author`, `article_date`, `article_highlight` FROM `Column` WHERE 1 -->
                         <th scope="col">sid</th>
                         <th scope="col">article_cate_sid</th>
                         <th scope="col">article_id</th>
