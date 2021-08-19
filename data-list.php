@@ -92,6 +92,7 @@
         }
     </style>
 <div class="container">
+    <!-- 關鍵字搜尋 -->
     <div class="row" >
         <div class="col">
             <form action="data-list.php" class="form-inline my-2 my-lg-0 d-flex justify-content-end">
@@ -102,6 +103,7 @@
             </form>
         </div>
     </div>
+    
     <div class="row">
         <div class="col">
             <nav aria-label="Page navigation example">
@@ -162,6 +164,7 @@
                 <thead>
                 <tr>
                     <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                    
                     <th scope="col"><i class="fas fa-trash-alt"> ajax</i></th>
 
                     <!-- SELECT `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` FROM `address_book_0814` WHERE 1 -->                    

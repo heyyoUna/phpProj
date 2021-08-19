@@ -8,40 +8,49 @@
     
     // query string parameters
     $qs = [];
+
+    // 關鍵字查詢
+    $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
     
     //預設呈現第一頁
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     
+    $where = ' WHERE 1 ';
+    if(! empty($keyword)){
+        // $where .= " AND `name` LIKE '%{$keyword}%' "; // sql injection 漏洞
+        $where .= sprintf(" AND `name` LIKE %s ", $pdo->quote('%'. $keyword. '%'));
+
+        $qs['keyword'] = $keyword;
+    }
     
     //總筆數
-    $totalRows = $pdo->query("SELECT count(1) FROM Column $where ")
-        ->fetch(PDO::FETCH_NUM)[0];
-    
-    
-    //確定總頁數，才可確定分頁按鈕 (總頁數 ＝ 總筆數 / 每頁顯示筆數)
-    $totalPages = ceil($totalRows / $perPage); 
+    $totalRows = $pdo->query("SELECT count(1) FROM `Column` where 1")
+    ->fetch(PDO::FETCH_NUM)[0];
+
+    // 總共有幾頁, 才能生出分頁按鈕
+    $totalPages = ceil($totalRows / $perPage); // 正數是無條件進位
 
     $rows = [];
     // 要有資料才能讀取該頁的資料
     if($totalRows!=0) {
-    
-        //讓page的值在安全範圍內
-        if ($page < 1) {
-            header('Location: ?page=1');
-            exit;
-        }
-        if ($page > $totalPages) {
-            header('Location: ?page=' . $totalPages);
-            exit;
-        }
-    
-        $sql = sprintf("SELECT * FROM Column %s ORDER BY sid DESC LIMIT %s, %s",
-            $where,
-            ($page - 1) * $perPage,
-                $perPage);
 
-        $rows = $pdo->query($sql)->fetchAll(); 
-        }
+    // 讓 $page 的值在安全的範圍
+    if ($page < 1) {
+        header('Location: ?page=1');
+        exit;
+    }
+    if ($page > $totalPages) {
+        header('Location: ?page=' . $totalPages);
+        exit;
+    }
+
+    $sql = sprintf("SELECT * FROM `Column` %s ORDER BY sid DESC LIMIT %s, %s",
+    $where,
+    ($page - 1) * $perPage,
+        $perPage);
+
+$rows = $pdo->query($sql)->fetchAll();
+}
 ?>
 
 <?php include __DIR__. '/food_partials/02-html-head.php'; ?>
