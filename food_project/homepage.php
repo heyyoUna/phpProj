@@ -8,7 +8,7 @@
 <style> 
     .homePage{
         text-align: center;
-        margin: 5px;
+        margin-top: 5px;
         width: 100%;
     }
     .homePage img{
@@ -18,13 +18,12 @@
 </style>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="homepageIcon">
             <a class="text-success fs-1" href="homepage.php">好好食飯</a>
     </div>
 
     <div class="container">
-        <!-- <a class="navbar-brand" href="#">好好食飯</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,7 +35,7 @@
                     <a class="nav-link" href="#">商城</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="data-list.php">好食專欄</a>
+                    <a class="nav-link" href="f_data-list.php">好食專欄</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">外送餐廳列表</a>
@@ -56,7 +55,8 @@
 
         </div>
     </div>
-</nav>
+</nav> -->
+<?php include __DIR__. '/food_partials/homepageNavbar.php'; ?> 
 
 <div class="homePage">
     <img src="https://d3gjxtgqyywct8.cloudfront.net/o2o/image/b7d8f137-0529-4263-a2cd-71f0bd762010.jpg" alt="">
