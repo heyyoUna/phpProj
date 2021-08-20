@@ -1,12 +1,12 @@
-
 <?php
-include __DIR__. '/food_project/food_partials/01db_connect.php';
+include __DIR__. '/food_partials/01-init.php';
 
 header('Content-Type: application/json');
-$folder = __DIR__. './img/article_img';
+$folder = __DIR__. '/img/';
 
 $sid = ($_POST['sid']); 
-$sql = "SELECT * FROM `Column` WHERE `sid` = $sid ;";
+$sql = "SELECT * FROM `Column` WHERE `sid` = $sid;";
+
 
 $row = $pdo->query($sql)->fetch();
 
@@ -20,16 +20,15 @@ $output = [
 
 // 避免直接拜訪時的錯誤訊息(只要有一欄位是空的，就跳出)
 if(
-    empty($_POST['sid']) or
-    empty($_POST['ar_title']) or
-    empty($_POST['ar_author']) or
-    empty($_POST['ar_pic']) or
-    empty($_POST['ar_author']) or
-    empty($_POST['ar_date']) or
-    empty($_POST['ar_highlight']) or
-    empty($_POST['ar_content01']) or
-    empty($_POST['ar_content02']) 
-){
+    empty($_POST['ar_title']) 
+    // empty($_POST['ar_cate']) or
+    // empty($_POST['ar_pic']) or
+    // empty($_POST['ar_author']) or
+    // empty($_POST['ar_date']) or
+    // empty($_POST['ar_highlight']) or
+    // empty($_POST['ar_content01']) or
+    // empty($_POST['ar_content02']) 
+) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -37,7 +36,6 @@ if(
 $isSaved = false;
 
 if(! empty($_FILES)){
-
     if(move_uploaded_file(
       $_FILES['ar_pic']['tmp_name'], 
       $folder.$_FILES['ar_pic']['name']
@@ -45,6 +43,7 @@ if(! empty($_FILES)){
         //mysql中的update語法；sid是條件，放到最後；沒有加where就會動到整個資料庫
         $sql = "UPDATE `Column` SET 
         `ar_title`=?,
+        `ar_cate`=?,
         `ar_pic`=?,
         `ar_author`=?,
         `ar_date`=?,
@@ -74,7 +73,7 @@ $stmt->execute([
     $_POST['ar_highlight'],
     $_POST['ar_content01'],
     $_POST['ar_content02'],
-    $_POST['sid'],
+    $_POST['sid']
 ]);
 
 if($stmt->rowCount()){
@@ -91,6 +90,7 @@ if($stmt->rowCount()){
 if(! $isSaved){
     $sql = "UPDATE `Column` SET 
     `ar_title`=?,
+    `ar_cate`=?,
     `ar_pic`=?,
     `ar_author`=?,
     `ar_date`=?,
@@ -102,6 +102,7 @@ if(! $isSaved){
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute([
+
         $_POST['ar_title'],
         $_POST['ar_cate'],
         $_FILES['ar_pic']['name'],
@@ -110,7 +111,7 @@ if(! $isSaved){
         $_POST['ar_highlight'],
         $_POST['ar_content01'],
         $_POST['ar_content02'],
-        $_POST['sid'],     
+        $_POST['sid']
 ]);
 
 if($stmt->rowCount()){

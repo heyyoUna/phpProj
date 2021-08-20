@@ -27,23 +27,14 @@
         
     </style>
 
-<!-- <div class="container nav_container">
-    <div class="row">
-        <div class="mr-auto column_nav_wrap">
-            <div class="column_nav add_column"><a href="f_data-insert.php">新增文章</a></div>
-            <div class="column_nav"><a href="f_data-list.php">所有文章</a></div>
-            <div class="column_nav"><a href="f_data-list.php">聰明飲食</a></div>
-            <div class="column_nav"><a href="f_data-list.php">食物謠言</a></div>
-            <div class="column_nav"><a href="f_data-list.php">美味食譜</a></div>
-        </div>
-    </div>
-</div> -->
+
 <div class="container">
     <div class="row">
         <!-- <div class="col-md-6">
             <div class="card"> -->
                 <div class="card-body border mb-3">
                     <h5 class="card-title">新增文章</h5>
+
                     <!-- onsubmit：在表單送出前觸發；
                     return false:取消預設的行為;
                      在name後面加require表示該欄位為必填-->
@@ -56,7 +47,7 @@
 
                         <div class="form-group" name="ar_pic" method="post" enctype="multipart/form-data">
                         <label for="ar_title">照片</label>
-                            <input type="file" onchange="previewFile()"  class="form-control" id="ar_pic" name="ar_pic" accept="image/*">
+                            <input type="file" onchange="previewFile()"  class="form-control" id="upload" name="ar_pic" accept="image/*">
                             <img src="" height="200" alt="Image preview...">
                             <small class="form-text "></small>
                         </div>

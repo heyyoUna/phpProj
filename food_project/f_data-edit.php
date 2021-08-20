@@ -153,7 +153,7 @@
                 method: 'POST',
                 body: fd
             })
-                .then(r=>r.json())
+                .then(r => r.json())
                 .then(obj => {
                     console.log(obj);
                     if(obj.success){
@@ -163,7 +163,7 @@
                         alert(obj.error);
                     }
                 })
-                .catch(error=>{
+                .catch(error => {
                     console.log('error:', error);
                 });
         }

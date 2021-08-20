@@ -4,8 +4,9 @@ include __DIR__. '/food_partials/01-init.php';
 header('Content-Type: application/json');
 
 // 上傳後的檔案要放在哪裡
-$folder = __DIR__. './img';
+$folder = __DIR__. './img/';
 
+// echo json_encode($_POST['ar_title'], JSON_UNESCAPED_UNICODE);
 
 $output = [
     'success' => false,
