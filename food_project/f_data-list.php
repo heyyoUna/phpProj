@@ -14,14 +14,9 @@
     
     //預設呈現第一頁
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0;
     
     $where = ' WHERE 1 ';
-    if(! empty($keyword)){
-        // $where .= " AND `name` LIKE '%{$keyword}%' "; // sql injection 漏洞
-        $where .= sprintf(" AND `name` LIKE %s ", $pdo->quote('%'. $keyword. '%'));
-
-        $qs['keyword'] = $keyword;
-    }
     
     //總筆數
     $totalRows = $pdo->query("SELECT count(1) FROM `Column` where 1")
@@ -43,18 +38,24 @@
         header('Location: ?page=' . $totalPages);
         exit;
     }
-
+if (! $cate){
     $sql = sprintf("SELECT * FROM `Column` %s ORDER BY sid DESC LIMIT %s, %s",
-    $where,
-    ($page - 1) * $perPage,
-        $perPage);
+    $where, ($page - 1) * $perPage, $perPage);
+    $stmt = $pdo->query($sql);
+    $rows = $stmt->fetchAll();
+} else {
+    $where .= "AND ar_cate = $cate";
+    $qs['ar_cate'] = $cate;
+    $sql = "SELECT * FROM `Column` WHERE `ar_cate`=$cate ORDER BY `sid` DESC ;";
+    $rows = $pdo->query($sql)->fetchALL();
 
-$rows = $pdo->query($sql)->fetchAll();
+}
+
 }
 ?>
 
 <?php include __DIR__. '/food_partials/02-html-head.php'; ?>
-<?php include __DIR__. '/food_partials/03-navbar.php'; ?>
+<?php include __DIR__. '/food_partials/homepageNavbar.php'; ?>
 <style>
         table tbody i.fas.fa-trash-alt {
             color: darkred;
@@ -63,6 +64,7 @@ $rows = $pdo->query($sql)->fetchAll();
         table tbody i.fas.fa-trash-alt.ajaxDelete {
             color: darkred;
             cursor: pointer;
+            margin: auto;
         }
 
         .data_list_wrap{
@@ -76,6 +78,98 @@ $rows = $pdo->query($sql)->fetchAll();
             overflow: hidden;
         }
     </style>
+
+<style>
+    .nav_container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+    }
+
+    .column_nav_wrap{
+        display: flex;
+    }
+
+    .column_nav{
+        padding: 0 10px;
+        color: darkblue;
+    }
+    .add_column{
+        font-weight: bold;
+    }
+
+    .data_list img{
+        max-width: 100px;
+        height: auto;
+    }
+
+
+</style>
+
+<div class="container nav_container">
+    <div class="row">
+        <div class="mr-auto column_nav_wrap">
+            <div class="column_nav add_column"><a href="f_data-insert.php">新增文章</a></div>
+            <div class="column_nav"><a href="?">所有文章</a></div>
+            <div class="column_nav"><a href="?cate=1">聰明飲食</a></div>
+            <div class="column_nav"><a href="?cate=2">食物謠言</a></div>
+            <div class="column_nav"><a href="?cate=3">美味食譜</a></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination d-flex justify-content-end mt-3">
+
+                    <li class="page-item">
+                            <a class="page-link" href="?page=<?= 1 ?>">
+                            第一頁
+                            </a></li>
+
+                    <!-- 在li的class直接下disabled，就會使整個左箭頭失效；下三元陣列，設定頁數小於1，才失效-->
+                    <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?php
+                        $qs['page']=$page-1;
+                        echo http_build_query($qs);
+                        ?>">
+                            <i class="fas fa-arrow-circle-left"></i>
+                        </a>
+                    </li>
+
+
+                    <!-- 把頁碼顯示錯寫成無限迴圈，資料庫直接掛掉(i=$page-5; $i=$Page+5) -->
+                    <?php for($i=$page-5; $i<=$page+5; $i++):
+                        if($i>=1 and $i<=$totalPages):
+                            $qs['page'] = $i;
+                            ?>
+
+                    <li class="page-item <?= $i==$page ? 'active' : '' ?>">
+                        <a class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i ?></a>
+                    </li>
+                    <?php endif; endfor; ?>
+
+                    <li class="page-item <?= $page>=$totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?php
+                        $qs['page']=$page+1;
+                        echo http_build_query($qs);
+                        ?>">
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $totalPages ?>">>
+                        最末頁
+                        </a></li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -104,15 +198,12 @@ $rows = $pdo->query($sql)->fetchAll();
                 <tr data-sid="<?= $r['sid'] ?>"> 
 
                     <td>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-warning del1btn" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-trash-alt ajaxDelete"></i>
-                        </button>
+                        <i class="fas fa-trash-alt ajaxDelete pl-2"></i>
                     </td>
 
                     <td class="data_list"><?= $r['sid'] ?></td>
                     <td class="data_list"><?= $r['ar_title'] ?></td>
-                    <td class="data_list"><img src="/food_project/img/article_img/<?= $r['ar_pic'] ?>" alt=""></td>
+                    <td class="data_list"><img src="./img/article_img/<?= $r['ar_pic'] ?>" alt=""></td>
                     <td class="data_list"><?= $r['ar_author'] ?></td>
                     <td class="data_list"><?= $r['ar_date'] ?></td>
                     <td class="data_list"><?= $r['ar_highlight'] ?></td>
@@ -120,7 +211,7 @@ $rows = $pdo->query($sql)->fetchAll();
                     <td class="data_list"><?= $r['ar_content02'] ?></td>
                     <td class="data_list">
                         <a href="f_data-edit.php?sid=<?= $r['sid'] ?>">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit pl-2"></i>
                         </a>
                     </td>
                 </tr>
@@ -134,7 +225,7 @@ $rows = $pdo->query($sql)->fetchAll();
 </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -152,7 +243,7 @@ $rows = $pdo->query($sql)->fetchAll();
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 <?php include __DIR__. '/food_partials/04-html-script.php'; ?>
 
@@ -209,4 +300,4 @@ $rows = $pdo->query($sql)->fetchAll();
 </script>
  
 
-<?php include __DIR__. '/food_project/food_partials/05-html-foot.php'; ?>
+<?php include __DIR__. '/food_partials/05-html-foot.php'; ?>

@@ -1,5 +1,5 @@
 <?php
-include __DIR__. './food_partials/01db_connect.php';
+include __DIR__. '/food_partials/01-init.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 $output = [
@@ -9,7 +9,7 @@ $output = [
 ];
 
 if(! empty($sid)){  //如果是空值，就直接跳到結尾echo；不是空值，才跑內部程式
-    $sql = "DELETE FROM `Column` WHERE sid=$sid";
+    $sql = "DELETE FROM `Column` WHERE sid=$sid ";
     $stmt = $pdo->query($sql);
 
     if($stmt->rowCount()==1){   //如成功刪除一筆，要進行的程式

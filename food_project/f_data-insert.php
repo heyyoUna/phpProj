@@ -1,17 +1,16 @@
 <?php
-    include __DIR__. '/food_partials/01db_connect.php';
-    $title = '新增資料';?>
-<?php include __DIR__. '/food_partials/02html-head.php'; ?>
-<?php include __DIR__. '/food_partials/03navbar.php'; ?> 
-<?php include __DIR__. '/food_partials/03.1edit_insertNavbar_css.php'; ?> 
+    include __DIR__. '/food_partials/01-init.php';
+    $title = '新增文章';?>
+<?php include __DIR__. '/food_partials/02-html-head.php'; ?>
+<?php include __DIR__. '/food_partials/homepageNavbar.php'; ?>
+<?php include __DIR__. '/food_partials/03-navbar_without_page.php'; ?>
+
+
+
     <style>
         form .form-group small {
             color: red;
         }
-/* 
-        .insert_textarea{
-            height: 100px;
-        } */
 
         .container{
             width: 100%;
@@ -19,10 +18,26 @@
         }
         .insert_bt{
             text-align: center;
+        }
 
+        .column_nav_wrap{
+            display: flex;
+            padding: 5px;
         }
         
     </style>
+
+<!-- <div class="container nav_container">
+    <div class="row">
+        <div class="mr-auto column_nav_wrap">
+            <div class="column_nav add_column"><a href="f_data-insert.php">新增文章</a></div>
+            <div class="column_nav"><a href="f_data-list.php">所有文章</a></div>
+            <div class="column_nav"><a href="f_data-list.php">聰明飲食</a></div>
+            <div class="column_nav"><a href="f_data-list.php">食物謠言</a></div>
+            <div class="column_nav"><a href="f_data-list.php">美味食譜</a></div>
+        </div>
+    </div>
+</div> -->
 <div class="container">
     <div class="row">
         <!-- <div class="col-md-6">
@@ -86,7 +101,7 @@
 
 
 </div>
-<?php include __DIR__. '/food_partials/04html-script.php'; ?>
+<?php include __DIR__. '/food_partials/04-html-script.php'; ?>
 <script>
 
 function previewFile() {
@@ -146,4 +161,4 @@ function checkForm(){
 
 
 </script>
-<?php include __DIR__. '/food_partials/05html-foot.php'; ?>
+<?php include __DIR__. '/food_partials/05-html-foot.php'; ?>

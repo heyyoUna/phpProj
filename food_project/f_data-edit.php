@@ -1,11 +1,11 @@
 <?php
-    include __DIR__. '/food_partials/01db_connect.php';
+    include __DIR__. '/food_partials/01-init.php';
     $title = '修改資料';
 
     //拿到primary key
     $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
-    $sql = "SELECT * FROM `Column` WHERE sid=$sid";
+    $sql = "SELECT * FROM `Column` WHERE sid=$sid ";
 
     $r = $pdo->query($sql)->fetch();
 
@@ -13,11 +13,12 @@
         header('Location: f_data-list.php');
         exit;
     }
-    // echo json_encode($r, JSON_UNESCAPED_UNICODE);
+
 ?>
-<?php include __DIR__. '/food_partials/02html-head.php'; ?>
-<?php include __DIR__. '/food_partials/03navbar.php'; ?>
-<?php include __DIR__. '/food_partials/03.1edit_insertNavbar_css.php'; ?>
+
+<?php include __DIR__. '/food_partials/02-html-head.php'; ?>
+<?php include __DIR__. '/food_partials/homepageNavbar.php'; ?>
+<?php include __DIR__. '/food_partials/03-navbar_without_page.php'; ?>
 <style>
     form .form-group small {
         color: red;
@@ -25,6 +26,14 @@
     .insert_bt{
         text-align: center;
     }
+    #oldJpg{
+        width: 300px;
+    }
+
+    #previw{
+        display: none;
+    }
+
 </style>
 <div class="container">
     <div class="row">
@@ -39,12 +48,25 @@
                                 value="<?= htmlentities($r['ar_title']) ?>">    <!-- 加上value後，才會先呈現原始資料；透過htmlentities跳脫引號bug -->
                             <small class="form-text "></small>
                         </div>
+
                         <div class="form-group">
-                            <label for="ar_pic">照片</label>
-                            <input type="text" class="form-control" id="ar_pic" name="ar_pic"
-                                   value="<?= htmlentities($r['ar_pic']) ?>">
-                            <small class="form-text "></small>
+                            <label for="ar_cate">商品類別</label>
+                            <select class="form-control" id="ar_cate" name="ar_cate">
+                                <option value="1"<?= $r['ar_cate']==1 ? 'selected':'' ?>>聰明飲食</option>
+                                <option value="2"<?= $r['ar_cate']==2 ? 'selected':'' ?>>食物謠言</option>
+                                <option value="3"<?= $r['ar_cate']==3 ? 'selected':'' ?>>美味食譜</option>
+                            </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="ar_pic">文章封面照</label>
+                            <input type="file" class="form-control" id="upload" name="ar_pic">
+                            <br>
+                            <!-- 設定圖片預覽 -->
+                            <img id="preview" src="" alt="">
+                            <img id="oldJpg" src="./img/article_img/<?= htmlentities($r['ar_pic']) ?>" alt="">
+                        </div>
+
                         <div class="form-group">
                             <label for="ar_author">作者</label>
                             <input type="text" class="form-control" id="ar_author" name="ar_author"
@@ -87,19 +109,42 @@
 
 
 </div>
-<?php include __DIR__. '/food_partials/04html-script.php'; ?>
+<?php include __DIR__. '/food_partials/04-html-script.php'; ?>
 <script>
 
-    function checkForm(){
-        // 欄位的外觀要回復原來的狀態
-        ar_title.nextElementSibling.innerHTML = '';
-        ar_title.style.border = '1px #CCCCCC solid';
+    var upload = document.getElementById('upload')
+    var oldJpg = document.getElementById('oldJpg')
+    var preview = document.getElementById('preview')
 
+    // 設定upload 有改變的話觸發handleFiles function
+    upload.addEventListener("change",handleFiles,false)
+
+    function handleFiles(){
+        readURL(this)
+        // 設定顯示新圖檔
+        preview.style.display="block"
+    }
+    function readURL(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader()
+            // 設定舊圖檔消失
+            oldJpg.style.display="none";
+
+            reader.onload = function(e){
+                document.getElementById("preview").src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+
+
+    function checkForm(){
         let isPass = true;
+
         if(ar_title.value.length < 3){
             isPass = false;
-            name.nextElementSibling.innerHTML = '請填寫完整文章標題';
-            name.style.border = '1px red solid';
+            ar_title.nextElementSibling.innerHTML = '請填寫完整文章標題';
+            ar_title.style.border = '1px red solid';
         }
 
         if(isPass){
@@ -109,10 +154,11 @@
                 body: fd
             })
                 .then(r=>r.json())
-                .then(obj=>{
+                .then(obj => {
                     console.log(obj);
                     if(obj.success){
                         alert('修改成功');
+                        location.href = 'f_data-list.php';
                     } else {
                         alert(obj.error);
                     }
@@ -123,4 +169,4 @@
         }
     }
 </script>
-<?php include __DIR__. '/food_partials/05html-foot.php'; ?>
+<?php include __DIR__. '/food_partials/05-html-foot.php'; ?>

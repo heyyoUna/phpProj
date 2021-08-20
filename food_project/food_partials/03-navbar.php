@@ -34,33 +34,46 @@
         </div>
     </div>
 
-    <div class="row mt-3 ar_page">
+    <div class="row">
         <div class="col">
             <nav aria-label="Page navigation example">
-                <ul class=" column_nav_wrap pagination justify-content-end">
-                    
+                <ul class="pagination d-flex justify-content-end mt-3">
+
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?= 1 ?>">
-                        第一頁
-                        </a></li>
+                            <a class="page-link" href="?page=<?= 1 ?>">
+                            第一頁
+                            </a></li>
 
-                    <li class="page-item <?= $page<=1 ? 'disabled' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $page-1 ?>">
+                    <!-- 在li的class直接下disabled，就會使整個左箭頭失效；下三元陣列，設定頁數小於1，才失效-->
+                    <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?php
+                        $qs['page']=$page-1;
+                        echo http_build_query($qs);
+                        ?>">
                             <i class="fas fa-arrow-circle-left"></i>
-                        </a></li>
+                        </a>
+                    </li>
 
-                     <?php for($i=$page-5; $i < $page+5; $i++):
-                        if($i>=1 and $i<=$totalPage): ?> 
+
+                    <!-- 把頁碼顯示錯寫成無限迴圈，資料庫直接掛掉(i=$page-5; $i=$Page+5) -->
+                    <?php for($i=$page-5; $i<=$page+5; $i++):
+                        if($i>=1 and $i<=$totalPages):
+                            $qs['page'] = $i;
+                            ?>
+
                     <li class="page-item <?= $i==$page ? 'active' : '' ?>">
-                        <a class="page-link" href="?page=<?= $i ?>">
-                            <?= $i ?>
-                        </a></li>
+                        <a class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i ?></a>
+                    </li>
                     <?php endif; endfor; ?>
 
-                    <li class="page-item <?= $page>=$totalPage ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?page=<?= $page+1 ?>">
+                    <li class="page-item <?= $page>=$totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?php
+                        $qs['page']=$page+1;
+                        echo http_build_query($qs);
+                        ?>">
                             <i class="fas fa-arrow-circle-right"></i>
-                        </a></li>
+                        </a>
+                    </li>
 
                     <li class="page-item">
                         <a class="page-link" href="?page=<?= $totalPage ?>">
@@ -69,6 +82,7 @@
 
                 </ul>
             </nav>
+
         </div>
     </div>
 </div>
