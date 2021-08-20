@@ -102,7 +102,6 @@ if(! $isSaved){
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute([
-
         $_POST['ar_title'],
         $_POST['ar_cate'],
         $_FILES['ar_pic']['name'],
