@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="ar_cate">商品類別</label>
+                            <label for="ar_cate">文章類別</label>
                             <select class="form-control" id="ar_cate" name="ar_cate">
                                 <option value="1"<?= $r['ar_cate']==1 ? 'selected':'' ?>>聰明飲食</option>
                                 <option value="2"<?= $r['ar_cate']==2 ? 'selected':'' ?>>食物謠言</option>

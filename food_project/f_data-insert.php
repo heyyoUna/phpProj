@@ -45,6 +45,15 @@
                             <small class="form-text "></small>
                         </div>
 
+                        <div class="form-group">
+                            <label for="ar_cate">文章類別</label>
+                            <select class="form-control" id="ar_cate" name="ar_cate" >
+                                <option value="1">聰明飲食</option>
+                                <option value="2">食物謠言</option>
+                                <option value="3">美味食譜</option>
+                            </select>
+                        </div>
+
                         <div class="form-group" name="ar_pic" method="post" enctype="multipart/form-data">
                         <label for="ar_title">照片</label>
                             <input type="file" onchange="previewFile()"  class="form-control" id="upload" name="ar_pic" accept="image/*">

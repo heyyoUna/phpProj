@@ -3,14 +3,13 @@ include __DIR__. '/food_partials/01-init.php';
 
 header('Content-Type: application/json');
 
-// 上傳後的檔案要放在哪裡
-$folder = __DIR__. './img/';
+$folder = __DIR__. '/img/';
 
 // echo json_encode($_POST['ar_title'], JSON_UNESCAPED_UNICODE);
 
 $output = [
     'success' => false,
-    'error' => '',
+    'error' => '欄位資料不足',
     'rowCount' => 0,
     'postData' => $_POST,
 ];
@@ -23,16 +22,23 @@ if(! empty($_FILES)){
       $folder.$_FILES['ar_pic']['name']
     )){
         $sql = "INSERT INTO `Column`(
-               `sid`, `ar_title`, `ar_pic`, `ar_author`,
-               `ar_date`, `ar_highlight`, `ar_content01`, `ar_content02`
-               ) VALUES (
-                   'NULL', ?, '[PW-]', ?,
-                    ?, ?, ?, ?
-               )";
+            `ar_cate`, `ar_id`, `ar_title`, `ar_pic`, `ar_author`, `ar_date`, `ar_highlight`, `ar_content01`, `ar_content02`) VALUES (
+            'NULL', ?, ?, ?, '[PW-]', 
+            ?, ?, ?, ?, ?
+        )";
+
+
+        // $sql = "INSERT INTO `Column`(
+        //        `ar_title`, `ar_pic`, `ar_author`,
+        //        `ar_date`, `ar_highlight`, `ar_content01`, `ar_content02`
+        //        ) VALUES (
+        //            'NULL', ?, '[PW-]', ?,
+        //             ?, ?, ?, ?
+        //        )";
+
+
 
 $stmt = $pdo->prepare($sql);
-
-
 
 $stmt->execute([
     $_POST['ar_title'],
@@ -42,6 +48,7 @@ $stmt->execute([
     $_POST['ar_highlight'],
     $_POST['ar_content01'],
     $_POST['ar_content02'],
+    $_POST['sid']
 ]);
 
 $output['rowCount'] = $stmt->rowCount(); // 新增的筆數
